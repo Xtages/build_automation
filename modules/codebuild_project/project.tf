@@ -46,7 +46,7 @@ resource "aws_codebuild_project" "codebuild_project" {
   }
 }
 
-resource "aws_codebuild_source_credential" "github_tflive_prod_cred" {
+resource "aws_codebuild_source_credential" "github_prod_cred" {
   auth_type = "PERSONAL_ACCESS_TOKEN"
   server_type = "GITHUB"
   token = data.aws_ssm_parameter.github_token.value

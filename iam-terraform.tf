@@ -1,5 +1,5 @@
 resource "aws_iam_role" "codebuild_role_terraform" {
-  name = "codebuild-role-tf-live-prod"
+  name = "codebuild-role-terraform-${var.env}"
 
   assume_role_policy = <<EOF
 {
