@@ -1,3 +1,4 @@
+# Automation for this repository
 module "build_automation" {
   source = "./modules/codebuild_project"
   project_name = "build_automation"
@@ -8,6 +9,7 @@ module "build_automation" {
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
 }
 
+# Automation for tf_live_production repository
 module "tf_live_production" {
   source = "./modules/codebuild_project"
   project_name = "tf_live"
@@ -15,5 +17,16 @@ module "tf_live_production" {
   env = var.env
   github_repo_url = "https://github.com/Xtages/tf_live_production.git"
   github_branch = "main"
+  service_role_arn = aws_iam_role.codebuild_role_terraform.arn
+}
+
+# Automation for console repository
+module "console" {
+  source = "./modules/codebuild_project"
+  project_name = "console"
+  ecr_docker_img = "606626603369.dkr.ecr.us-east-1.amazonaws.com/xtages-buildenv:0.1.1"
+  env = var.env
+  github_repo_url = "https://github.com/Xtages/console.git"
+  github_branch = "build-and-deploy"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
 }
