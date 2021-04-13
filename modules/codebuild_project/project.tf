@@ -15,15 +15,16 @@ resource "aws_codebuild_project" "codebuild_project" {
   }
 
   environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
+    compute_type                = var.compute_type
     image                       = var.ecr_docker_img
     type                        = "LINUX_CONTAINER"
-    image_pull_credentials_type = "CODEBUILD"
+    image_pull_credentials_type = "SERVICE_ROLE"
+    privileged_mode = var.privileged
   }
 
   logs_config {
     cloudwatch_logs {
-      group_name  = "codebuild-${var.env}"
+      group_name  = var.cloudwatch_log_group_name
       stream_name = "${var.project_name}_${var.env}"
     }
   }

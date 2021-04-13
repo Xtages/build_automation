@@ -7,6 +7,7 @@ module "build_automation" {
   github_repo_url = "https://github.com/Xtages/build_automation.git"
   github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
+  cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
 }
 
 # Automation for tf_live_production repository
@@ -18,15 +19,19 @@ module "tf_live_production" {
   github_repo_url = "https://github.com/Xtages/tf_live_production.git"
   github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
+  cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
 }
 
 # Automation for console repository
 module "console" {
   source = "./modules/codebuild_project"
   project_name = "console"
-  ecr_docker_img = "606626603369.dkr.ecr.us-east-1.amazonaws.com/xtages-buildenv:0.1.1"
+  ecr_docker_img = "606626603369.dkr.ecr.us-east-1.amazonaws.com/xtages-buildenv:0.1.0"
   env = var.env
+  privileged = true
+  compute_type = "BUILD_GENERAL1_MEDIUM"
   github_repo_url = "https://github.com/Xtages/console.git"
-  github_branch = "build-and-deploy"
+  github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
+  cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
 }
