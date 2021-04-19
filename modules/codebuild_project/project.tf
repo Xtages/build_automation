@@ -1,7 +1,3 @@
-data "aws_ssm_parameter" "github_token" {
-  name = "/codebuild/matias/token"
-  with_decryption = true
-}
 
 resource "aws_codebuild_project" "codebuild_project" {
   name          = "${var.project_name}_${var.env}"
@@ -27,6 +23,12 @@ resource "aws_codebuild_project" "codebuild_project" {
       group_name  = var.cloudwatch_log_group_name
       stream_name = "${var.project_name}_${var.env}"
     }
+  }
+
+  vpc_config {
+    vpc_id = data.terraform_remote_state.xtages.outputs.vpc_id
+    subnets = data.terraform_remote_state.xtages.outputs.private_subnets
+    security_group_ids = [aws_security_group.codebuild_default_sg.id]
   }
 
   source {
