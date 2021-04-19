@@ -8,6 +8,7 @@ module "build_automation" {
   github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
   cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
+  codebuild_sg = [aws_security_group.codebuild_default_sg.id]
 }
 
 # Automation for tf_live_production repository
@@ -20,6 +21,7 @@ module "tf_live_production" {
   github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
   cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
+  codebuild_sg = [aws_security_group.codebuild_default_sg.id]
 }
 
 # Automation for console repository
@@ -34,4 +36,5 @@ module "console" {
   github_branch = "main"
   service_role_arn = aws_iam_role.codebuild_role_terraform.arn
   cloudwatch_log_group_name = aws_cloudwatch_log_group.codebuild_log_group.name
+  codebuild_sg = [aws_security_group.codebuild_default_sg.id]
 }

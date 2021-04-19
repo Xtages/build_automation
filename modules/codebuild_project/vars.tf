@@ -28,3 +28,5 @@ variable "compute_type" {
 variable "privileged" {
   default = false
 }
+
+variable "codebuild_sg" {}

@@ -28,7 +28,7 @@ resource "aws_codebuild_project" "codebuild_project" {
   vpc_config {
     vpc_id = data.terraform_remote_state.xtages.outputs.vpc_id
     subnets = data.terraform_remote_state.xtages.outputs.private_subnets
-    security_group_ids = [aws_security_group.codebuild_default_sg.id]
+    security_group_ids = var.codebuild_sg
   }
 
   source {
